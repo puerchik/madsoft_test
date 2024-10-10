@@ -2,10 +2,12 @@ import { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import s from './questionCreationForm.module.scss'
+import { useAppDispatch } from '@/shared/hooks/reduxHooks'
+import { addQuestion } from '@/app/store/knowledgeChecksSlice'
 
-type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
+export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
 
-type QuestionForm = {
+export type Question = {
   type: QuestionType
   options: string[]
   correctAnswer: string[]
@@ -17,7 +19,7 @@ export const QuestionCreationForm = () => {
   const [options, setOptions] = useState<string[]>([])
   const [optionsQuantity, setOptionsQuantity] = useState(0)
 
-  const { register, handleSubmit, reset } = useForm<QuestionForm>({
+  const { register, handleSubmit, reset } = useForm<Question>({
     defaultValues: {
       options: [],
       type: '',
@@ -25,6 +27,8 @@ export const QuestionCreationForm = () => {
       question: '',
     },
   })
+
+  const dispatch = useAppDispatch()
 
   const changeQuestionTypeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setQuestionType(e.currentTarget.value as QuestionType)
@@ -44,8 +48,9 @@ export const QuestionCreationForm = () => {
     setOptions(newOptions)
   }
 
-  const onSubmitHandler: SubmitHandler<QuestionForm> = data => {
+  const onSubmitHandler: SubmitHandler<Question> = data => {
     console.log(data)
+    dispatch(addQuestion(data))
     setOptionsQuantity(0)
     setOptions([])
     reset()
