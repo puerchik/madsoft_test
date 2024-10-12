@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+
 import { knowledgeChecksReducer } from './knowledgeChecksSlice'
 
 export const store = configureStore({

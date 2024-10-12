@@ -1,9 +1,10 @@
 import { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import s from './questionCreationForm.module.scss'
 import { useAppDispatch } from '@/shared/hooks/reduxHooks'
 import { addQuestion } from '@/app/store/knowledgeChecksSlice'
+
+import s from './questionCreationForm.module.scss'
 
 export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
 
