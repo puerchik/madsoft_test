@@ -26,5 +26,6 @@
       "@/*": ["src/*"]
     }
   },
+  "files": ["./node_modules/redux-persist/types/storage/index.d.ts"],
   "include": ["src"]
 }

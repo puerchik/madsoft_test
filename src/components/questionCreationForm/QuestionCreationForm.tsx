@@ -6,6 +6,10 @@ import { addQuestion } from '@/app/store/knowledgeChecksSlice'
 
 import s from './questionCreationForm.module.scss'
 
+type Props = {
+  id: string
+}
+
 export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
 
 export type Question = {
@@ -15,7 +19,7 @@ export type Question = {
   question: string
 }
 
-export const QuestionCreationForm = () => {
+export const QuestionCreationForm = ({ id }: Props) => {
   const [questionType, setQuestionType] = useState<QuestionType>('')
   const [options, setOptions] = useState<string[]>([])
   const [optionsQuantity, setOptionsQuantity] = useState(0)
@@ -50,8 +54,8 @@ export const QuestionCreationForm = () => {
   }
 
   const onSubmitHandler: SubmitHandler<Question> = data => {
-    console.log(data)
-    dispatch(addQuestion(data))
+    const question = { ...data, id }
+    dispatch(addQuestion(question))
     setOptionsQuantity(0)
     setOptions([])
     reset()

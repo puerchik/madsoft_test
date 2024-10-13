@@ -28,7 +28,7 @@ export const knowledgeChecksSlice = createSlice({
   name: 'knowledgeChecks',
   initialState,
   reducers: {
-    addQuestion: (state, action: PayloadAction<Question>) => {
+    addQuestion: (state, action: PayloadAction<Question & { id: string }>) => {
       const newQuestion = {
         type: action.payload.type,
         question: action.payload.question,
@@ -36,7 +36,7 @@ export const knowledgeChecksSlice = createSlice({
         options: action.payload.options,
       }
 
-      state.initTest.test.push(newQuestion)
+      state[action.payload.id].test.push(newQuestion)
     },
     addTest: (state, action: PayloadAction<Test>) => {
       const newTest = {
