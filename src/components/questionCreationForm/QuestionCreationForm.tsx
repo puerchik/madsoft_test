@@ -4,19 +4,12 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAppDispatch } from '@/shared/hooks/reduxHooks'
 import { addQuestion } from '@/app/store/knowledgeChecksSlice'
 
+import { Question, QuestionType } from '@/components/question'
+
 import s from './questionCreationForm.module.scss'
 
 type Props = {
   id: string
-}
-
-export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
-
-export type Question = {
-  type: QuestionType
-  options: string[]
-  correctAnswer: string[]
-  question: string
 }
 
 export const QuestionCreationForm = ({ id }: Props) => {

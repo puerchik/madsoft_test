@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { Question } from '@/components/questionCreationForm'
+import { Answer, Question } from '@/components/question'
 import { Test } from '@/components/testCreationForm'
 
 type State = {
@@ -9,13 +9,27 @@ type State = {
 
 const initialTest: Test = {
   id: 'initTest',
-  testName: 'Единицы измерения',
+  testName: 'Пример теста',
+  answers: [],
+  currentQuestionNumber: 1,
   test: [
     {
       type: 'single',
       question: 'Сколько миллиметров в сантиметре?',
       correctAnswer: ['10'],
       options: ['1', '100', '10', '1000'],
+    },
+    {
+      type: 'multiply',
+      question: 'Выберите четные числа.',
+      correctAnswer: ['10', '88'],
+      options: ['5', '10', '37', '88'],
+    },
+    {
+      type: 'short',
+      question: 'Столица Беларуси.',
+      correctAnswer: ['Минск'],
+      options: [],
     },
   ],
 }
@@ -43,12 +57,23 @@ export const knowledgeChecksSlice = createSlice({
         id: action.payload.id,
         testName: action.payload.testName,
         test: action.payload.test,
+        answers: action.payload.answers,
+        currentQuestionNumber: 1,
       }
 
       state[action.payload.id] = newTest
+    },
+    addAnswer: (state, action: PayloadAction<Answer & { testId: string }>) => {
+      const answer: Answer = {
+        answer: action.payload.answer,
+        isCorrect: action.payload.isCorrect,
+      }
+
+      state[action.payload.testId].answers.push(answer)
+      state[action.payload.testId].currentQuestionNumber++
     },
   },
 })
 
 export const knowledgeChecksReducer = knowledgeChecksSlice.reducer
-export const { addQuestion, addTest } = knowledgeChecksSlice.actions
+export const { addQuestion, addTest, addAnswer } = knowledgeChecksSlice.actions

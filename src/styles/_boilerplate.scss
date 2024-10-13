@@ -1,0 +1,27 @@
+:root {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-red: #b92a35;
+  --color-gray: #e1e1e1;
+
+  --font-size-main: 16px;
+  --font-size-header: 26px;
+  --font-size-subheader: 18px;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body {
+  font-family: sans-serif;
+  color: var(--color-black);
+  font-size: var(--font-size-main);
+}
+
+main {
+  margin: 0 auto;
+}

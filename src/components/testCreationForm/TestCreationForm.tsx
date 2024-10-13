@@ -1,18 +1,21 @@
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useAppDispatch } from '@/shared/hooks/reduxHooks'
 import { addTest } from '@/app/store/knowledgeChecksSlice'
+import { useAppDispatch } from '@/shared/hooks/reduxHooks'
 
-import { Question, QuestionCreationForm } from '@/components/questionCreationForm'
+import { QuestionCreationForm } from '@/components/questionCreationForm'
+import { Answer, Question } from '@/components/question'
 
 import s from './testCreationForm.module.scss'
-import { useState } from 'react'
 
 export type Test = {
   id: string
   testName: string
   test: Question[]
+  answers: Answer[]
+  currentQuestionNumber: number
 }
 export const TestCreationForm = () => {
   const [testId, setTestId] = useState('')
@@ -31,6 +34,8 @@ export const TestCreationForm = () => {
       id: newTestId,
       testName: data.testName,
       test: [],
+      answers: [],
+      currentQuestionNumber: 1,
     }
 
     setTestId(newTestId)

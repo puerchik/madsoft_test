@@ -1,7 +1,13 @@
 import { TestCreationForm } from '@/components/testCreationForm'
+import { TestSelectionComponent } from '@/components/testSelectionComponent'
 
 import '@/styles/index.scss'
 
 export const App = () => {
-  return <TestCreationForm />
+  return (
+    <main>
+      <TestSelectionComponent />
+      <TestCreationForm />
+    </main>
+  )
 }

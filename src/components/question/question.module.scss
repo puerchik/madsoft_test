@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.title {
+  font-size: var(--font-size-header);
+  font-weight: 600;
+}
+
+.question {
+  font-size: var(--font-size-subheader);
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.input[type='radio'],
+.input[type='checkbox'] {
+  appearance: none;
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--color-black);
+  cursor: pointer;
+}
+
+.input[type='radio']:checked,
+.input[type='checkbox']:checked {
+  border: none;
+  background-color: var(--color-red);
+}
