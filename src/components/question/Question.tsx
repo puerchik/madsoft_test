@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { addAnswer } from '@/app/store/knowledgeChecksSlice'
 
 import s from './question.module.scss'
+import { areArraysEqual } from '@/shared/utils/arraysEquality'
 
 export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
 
@@ -16,7 +17,7 @@ export type Question = {
 }
 
 export type Answer = {
-  answer: string
+  answer: string[]
   isCorrect: boolean
 }
 
@@ -30,6 +31,7 @@ export const Question = () => {
 
   const currentTest = useAppSelector(state => state.persistedReducer[testId])
   const currentQuestion = currentTest.test[+questionNumber - 1]
+  const options = currentQuestion.options
 
   let inputType = ''
   switch (currentQuestion?.type) {
@@ -43,11 +45,12 @@ export const Question = () => {
       inputType = ''
   }
 
-  const onSubmitHandler: SubmitHandler<Pick<Answer, 'answer'>> = data => {
+  const onSubmitHandler: SubmitHandler<Pick<Answer, 'answer'>> = ({ answer }) => {
+    const finalAnswer = Array.isArray(answer) ? answer : [answer]
     dispatch(
       addAnswer({
-        answer: data.answer,
-        isCorrect: data.answer === currentQuestion.correctAnswer[0],
+        answer: finalAnswer,
+        isCorrect: areArraysEqual(finalAnswer, currentQuestion.correctAnswer),
         testId,
       })
     )
@@ -60,20 +63,26 @@ export const Question = () => {
           <h1 className={s.title}>{currentTest.testName}</h1>
           <p className={s.question}>{currentQuestion.question}</p>
           <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
-            {currentQuestion.options.map((el, i) => (
-              <div key={i} className={s.inputWrapper}>
-                <input
-                  id={`${i}`}
-                  className={s.input}
-                  {...register('answer')}
-                  type={inputType}
-                  value={el}
-                />
-                <label htmlFor={`${i}`} className={s.label}>
-                  {el}
-                </label>
-              </div>
-            ))}
+            {options.length !== 0 ? (
+              currentQuestion.options.map((el, i) => (
+                <div key={i} className={s.inputWrapper}>
+                  <input
+                    id={`${i}`}
+                    className={s.input}
+                    {...register('answer')}
+                    type={inputType}
+                    value={el}
+                  />
+                  <label htmlFor={`${i}`} className={s.label}>
+                    {el}
+                  </label>
+                </div>
+              ))
+            ) : (
+              <>
+                <input type="text" {...register('answer')} />
+              </>
+            )}
             <button type="submit">Ответить</button>
           </form>
         </div>
