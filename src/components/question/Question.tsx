@@ -1,11 +1,13 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { addAnswer } from '@/app/store/knowledgeChecksSlice'
+import { areArraysEqual } from '@/shared/utils/arraysEquality'
+
+import { Timer } from '@/components/timer'
 
 import s from './question.module.scss'
-import { areArraysEqual } from '@/shared/utils/arraysEquality'
 
 export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
 
@@ -14,6 +16,7 @@ export type Question = {
   options: string[]
   correctAnswer: string[]
   question: string
+  timer: number
 }
 
 export type Answer = {
@@ -23,15 +26,35 @@ export type Answer = {
 
 export const Question = () => {
   const { id, number } = useParams()
-  const { register, handleSubmit } = useForm<Answer, 'answer'>()
+  const navigate = useNavigate()
+  const { register, handleSubmit, reset } = useForm<Pick<Answer, 'answer'>>({
+    defaultValues: {
+      answer: [''],
+    },
+  })
   const dispatch = useAppDispatch()
 
   const testId = id ? id : ''
   const questionNumber = number ? +number : 1
 
   const currentTest = useAppSelector(state => state.persistedReducer[testId])
-  const currentQuestion = currentTest.test[+questionNumber - 1]
-  const options = currentQuestion.options
+  const currentQuestion = useAppSelector(
+    state => state.persistedReducer[testId].test[+questionNumber - 1]
+  )
+  const nextQuestionTimer = useAppSelector(
+    state =>
+      state.persistedReducer[testId].test[
+        questionNumber === currentTest.test.length || questionNumber === 1
+          ? +questionNumber - 1
+          : +questionNumber
+      ].timer
+  )
+  const currentQuestionNumber = useAppSelector(
+    state => state.persistedReducer[testId].currentQuestionNumber
+  )
+  const options = useAppSelector(
+    state => state.persistedReducer[testId].test[+questionNumber - 1].options
+  )
 
   let inputType = ''
   switch (currentQuestion?.type) {
@@ -47,6 +70,8 @@ export const Question = () => {
 
   const onSubmitHandler: SubmitHandler<Pick<Answer, 'answer'>> = ({ answer }) => {
     const finalAnswer = Array.isArray(answer) ? answer : [answer]
+    console.log(answer, Array.isArray(answer), finalAnswer)
+
     dispatch(
       addAnswer({
         answer: finalAnswer,
@@ -57,12 +82,26 @@ export const Question = () => {
         testId,
       })
     )
+
+    if (currentQuestionNumber === currentTest.test.length) {
+      navigate(`/test/${testId}/result`)
+    } else {
+      navigate(`/test/${testId}/${currentQuestionNumber + 1}`)
+    }
+    reset()
   }
+
+  console.log(nextQuestionTimer)
 
   return (
     <>
       {currentQuestion ? (
         <div className={s.wrapper}>
+          <Timer
+            minutes={0}
+            seconds={nextQuestionTimer}
+            onSubmitTimerHandler={handleSubmit(onSubmitHandler)}
+          />
           <h1 className={s.title}>{currentTest.testName}</h1>
           <p className={s.question}>{currentQuestion.question}</p>
           <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>

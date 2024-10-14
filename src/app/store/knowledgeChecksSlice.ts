@@ -18,24 +18,28 @@ const initialTest: Test = {
       question: 'Сколько миллиметров в сантиметре?',
       correctAnswer: ['10'],
       options: ['1', '100', '10', '1000'],
+      timer: 7,
     },
     {
       type: 'multiply',
       question: 'Выберите четные числа.',
       correctAnswer: ['10', '88'],
       options: ['5', '10', '37', '88'],
+      timer: 5,
     },
     {
       type: 'short',
       question: 'Столица Беларуси.',
       correctAnswer: ['Минск'],
       options: [],
+      timer: 3,
     },
     {
       type: 'detailed',
       question: 'Напишите своими словами алгоритм бинарного поиска.',
       correctAnswer: [],
       options: [],
+      timer: 4,
     },
   ],
 }
@@ -54,6 +58,7 @@ export const knowledgeChecksSlice = createSlice({
         question: action.payload.question,
         correctAnswer: action.payload.correctAnswer,
         options: action.payload.options,
+        timer: 0,
       }
 
       state[action.payload.id].test.push(newQuestion)
