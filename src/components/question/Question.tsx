@@ -50,7 +50,10 @@ export const Question = () => {
     dispatch(
       addAnswer({
         answer: finalAnswer,
-        isCorrect: areArraysEqual(finalAnswer, currentQuestion.correctAnswer),
+        isCorrect:
+          currentQuestion.type === 'detailed'
+            ? true
+            : areArraysEqual(finalAnswer, currentQuestion.correctAnswer),
         testId,
       })
     )
@@ -64,7 +67,7 @@ export const Question = () => {
           <p className={s.question}>{currentQuestion.question}</p>
           <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
             {options.length !== 0 ? (
-              currentQuestion.options.map((el, i) => (
+              options.map((el, i) => (
                 <div key={i} className={s.inputWrapper}>
                   <input
                     id={`${i}`}
@@ -80,7 +83,11 @@ export const Question = () => {
               ))
             ) : (
               <>
-                <input type="text" {...register('answer')} />
+                {currentQuestion.type === 'short' ? (
+                  <input type="text" {...register('answer')} />
+                ) : (
+                  <textarea {...register('answer')}></textarea>
+                )}
               </>
             )}
             <button type="submit">Ответить</button>

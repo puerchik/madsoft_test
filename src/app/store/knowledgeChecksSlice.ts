@@ -31,6 +31,12 @@ const initialTest: Test = {
       correctAnswer: ['Минск'],
       options: [],
     },
+    {
+      type: 'detailed',
+      question: 'Напишите своими словами алгоритм бинарного поиска.',
+      correctAnswer: [],
+      options: [],
+    },
   ],
 }
 
