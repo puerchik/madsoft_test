@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 export const TestSelectionComponent = () => {
   const testsList = useAppSelector(state => state.persistedReducer)
 
+  console.log(Object.entries(testsList))
+
   return (
     <div className={s.wrapper}>
       <h3 className={s.title}>Выберите тест для прохождения:</h3>

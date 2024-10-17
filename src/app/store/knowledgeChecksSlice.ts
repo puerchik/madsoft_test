@@ -81,10 +81,20 @@ export const knowledgeChecksSlice = createSlice({
       }
 
       state[action.payload.testId].answers.push(answer)
-      state[action.payload.testId].currentQuestionNumber++
+
+      if (
+        state[action.payload.testId].test.length !==
+        state[action.payload.testId].currentQuestionNumber
+      ) {
+        state[action.payload.testId].currentQuestionNumber++
+      }
+    },
+    resetTest: (state, action: PayloadAction<{ testId: string }>) => {
+      state[action.payload.testId].answers = []
+      state[action.payload.testId].currentQuestionNumber = 1
     },
   },
 })
 
 export const knowledgeChecksReducer = knowledgeChecksSlice.reducer
-export const { addQuestion, addTest, addAnswer } = knowledgeChecksSlice.actions
+export const { addQuestion, addTest, addAnswer, resetTest } = knowledgeChecksSlice.actions

@@ -44,15 +44,18 @@ export const Question = () => {
   const currentQuestionNumber = useAppSelector(
     state => state.persistedReducer[testId].currentQuestionNumber
   )
+  console.log(currentQuestionNumber)
 
   const questionTimer = useAppSelector(
-    state => state.persistedReducer[testId].test[+currentQuestionNumber - 1].timer
+    state =>
+      state.persistedReducer[testId].test[
+        currentQuestionNumber <= currentTest.test.length ? +currentQuestionNumber - 1 : 0
+      ].timer
   )
+
   const options = useAppSelector(
     state => state.persistedReducer[testId].test[+questionNumber - 1].options
   )
-
-  // console.log(questionNumber)
 
   let inputType = ''
   switch (currentQuestion?.type) {
@@ -92,16 +95,19 @@ export const Question = () => {
     <>
       {currentQuestion ? (
         <div className={s.wrapper}>
-          <Countdown
-            date={Date.now() + questionTimer * 1000}
-            onComplete={handleSubmit(onSubmitHandler)}
-            autoStart
-            renderer={({ minutes, seconds }) => (
-              <span>
-                {minutes}:{seconds}
-              </span>
-            )}
-          />
+          {questionTimer && (
+            <Countdown
+              key={questionNumber}
+              date={Date.now() + questionTimer * 1000}
+              onComplete={handleSubmit(onSubmitHandler)}
+              autoStart
+              renderer={({ minutes, seconds }) => (
+                <span>
+                  {minutes}:{seconds}
+                </span>
+              )}
+            />
+          )}
           <h1 className={s.title}>{currentTest.testName}</h1>
           <p className={s.question}>{currentQuestion.question}</p>
           <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
