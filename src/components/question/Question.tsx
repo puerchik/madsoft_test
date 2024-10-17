@@ -1,11 +1,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
+import Countdown from 'react-countdown'
 
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { addAnswer } from '@/app/store/knowledgeChecksSlice'
 import { areArraysEqual } from '@/shared/utils/arraysEquality'
-
-import { Timer } from '@/components/timer'
 
 import s from './question.module.scss'
 
@@ -41,20 +40,19 @@ export const Question = () => {
   const currentQuestion = useAppSelector(
     state => state.persistedReducer[testId].test[+questionNumber - 1]
   )
-  const nextQuestionTimer = useAppSelector(
-    state =>
-      state.persistedReducer[testId].test[
-        questionNumber === currentTest.test.length || questionNumber === 1
-          ? +questionNumber - 1
-          : +questionNumber
-      ].timer
-  )
+
   const currentQuestionNumber = useAppSelector(
     state => state.persistedReducer[testId].currentQuestionNumber
+  )
+
+  const questionTimer = useAppSelector(
+    state => state.persistedReducer[testId].test[+currentQuestionNumber - 1].timer
   )
   const options = useAppSelector(
     state => state.persistedReducer[testId].test[+questionNumber - 1].options
   )
+
+  // console.log(questionNumber)
 
   let inputType = ''
   switch (currentQuestion?.type) {
@@ -70,7 +68,6 @@ export const Question = () => {
 
   const onSubmitHandler: SubmitHandler<Pick<Answer, 'answer'>> = ({ answer }) => {
     const finalAnswer = Array.isArray(answer) ? answer : [answer]
-    console.log(answer, Array.isArray(answer), finalAnswer)
 
     dispatch(
       addAnswer({
@@ -91,16 +88,19 @@ export const Question = () => {
     reset()
   }
 
-  console.log(nextQuestionTimer)
-
   return (
     <>
       {currentQuestion ? (
         <div className={s.wrapper}>
-          <Timer
-            minutes={0}
-            seconds={nextQuestionTimer}
-            onSubmitTimerHandler={handleSubmit(onSubmitHandler)}
+          <Countdown
+            date={Date.now() + questionTimer * 1000}
+            onComplete={handleSubmit(onSubmitHandler)}
+            autoStart
+            renderer={({ minutes, seconds }) => (
+              <span>
+                {minutes}:{seconds}
+              </span>
+            )}
           />
           <h1 className={s.title}>{currentTest.testName}</h1>
           <p className={s.question}>{currentQuestion.question}</p>
