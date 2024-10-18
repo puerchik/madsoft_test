@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
-import Countdown from 'react-countdown'
+import Countdown, { zeroPad } from 'react-countdown'
+import clsx from 'clsx'
 
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { addAnswer } from '@/app/store/knowledgeChecksSlice'
@@ -95,20 +96,38 @@ export const Question = () => {
     <>
       {currentQuestion ? (
         <div className={s.wrapper}>
-          {questionTimer && (
-            <Countdown
-              key={questionNumber}
-              date={Date.now() + questionTimer * 1000}
-              onComplete={handleSubmit(onSubmitHandler)}
-              autoStart
-              renderer={({ minutes, seconds }) => (
-                <span>
-                  {minutes}:{seconds}
-                </span>
-              )}
-            />
-          )}
-          <h1 className={s.title}>{currentTest.testName}</h1>
+          <div className={s.titleWrapper}>
+            <h1 className={s.title}>{currentTest.testName}</h1>
+            {questionTimer && (
+              <Countdown
+                key={questionNumber}
+                date={Date.now() + questionTimer * 1000}
+                onComplete={handleSubmit(onSubmitHandler)}
+                autoStart
+                renderer={({ minutes, seconds }) => (
+                  <div className={s.timer}>
+                    <span>
+                      {zeroPad(minutes)}:{zeroPad(seconds)}
+                    </span>
+                  </div>
+                )}
+              />
+            )}
+          </div>
+          <div className={s.testProgressBar}>
+            {currentTest.test.map((_, i) => {
+              return (
+                <div
+                  key={i}
+                  className={clsx(
+                    s.testProgressItem,
+                    i === currentQuestionNumber - 1 && s.testProgressCurrentItem,
+                    i < currentQuestionNumber - 1 && s.testProgressDoneItem
+                  )}
+                ></div>
+              )
+            })}
+          </div>
           <p className={s.question}>{currentQuestion.question}</p>
           <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
             {options.length !== 0 ? (
