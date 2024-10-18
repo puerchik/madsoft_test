@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: var(--font-size-header);
+  font-weight: 600;
+}
+
+.result {
+  font-size: var(--font-size-subheader);
+}

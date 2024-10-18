@@ -2,6 +2,8 @@ import { resetTest } from '@/app/store/knowledgeChecksSlice'
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import s from './result.module.scss'
+
 export const Result = () => {
   const { id } = useParams()
   const dispatch = useAppDispatch()
@@ -24,10 +26,10 @@ export const Result = () => {
 
   console.log(answers, correct, incorrect)
   return (
-    <div>
-      <h3>Результаты теста:</h3>
-      <p>Тест пройден на {`${(correct / answers.length) * 100}`}%</p>
-      <p>
+    <div className={s.wrapper}>
+      <h3 className={s.title}>Результаты теста:</h3>
+      <p className={s.result}>Тест пройден на {`${(correct / answers.length) * 100}`}%</p>
+      <p className={s.result}>
         Правильных ответов {`${correct}`} из {`${answers.length}`}
       </p>
       <button onClick={restartTestHandler}>Пройти тест заново</button>
