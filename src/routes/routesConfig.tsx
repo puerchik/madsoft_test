@@ -4,6 +4,8 @@ import { App } from '@/app/App'
 import { Question } from '@/components/question'
 import { Result } from '@/components/result'
 import { HomePage } from '@/components/homePage'
+import { TestCreationForm } from '@/components/testCreationForm'
+import { TestSelectionComponent } from '@/components/testSelectionComponent'
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ export const router = createBrowserRouter([
       {
         path: '/test/:id/result',
         element: <Result />,
+      },
+      {
+        path: '/createTest',
+        element: <TestCreationForm />,
+      },
+      {
+        path: '/selectTest',
+        element: <TestSelectionComponent />,
       },
     ],
   },

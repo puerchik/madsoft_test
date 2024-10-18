@@ -6,9 +6,9 @@
   color: var(--color-white);
   text-align: center;
   transition: 0.2s;
-}
 
-.button:hover {
-  cursor: pointer;
-  opacity: 0.9;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
 }

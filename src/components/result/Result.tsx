@@ -24,7 +24,7 @@ export const Result = () => {
   }
 
   const selectTestHandler = () => {
-    navigate(`/`)
+    navigate('/')
   }
 
   console.log(answers, correct, incorrect)
@@ -37,7 +37,7 @@ export const Result = () => {
       </p>
       <div className={s.buttonWrapper}>
         <Button onClickHandler={restartTestHandler}>Пройти тест заново</Button>
-        <Button onClickHandler={selectTestHandler}>Выбрать другой тест</Button>
+        <Button onClickHandler={selectTestHandler}>Главная страница</Button>
       </div>
     </div>
   )
