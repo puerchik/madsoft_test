@@ -7,8 +7,9 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { addAnswer } from '@/app/store/knowledgeChecksSlice'
 import { areArraysEqual } from '@/shared/utils/arraysEquality'
 
+import { Button } from '@/components/button'
+
 import s from './question.module.scss'
-import { Button } from '../button'
 
 export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
 

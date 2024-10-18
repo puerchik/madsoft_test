@@ -1,5 +1,6 @@
-import { TestCreationForm } from '../testCreationForm'
-import { TestSelectionComponent } from '../testSelectionComponent'
+import { TestCreationForm } from '@/components/testCreationForm'
+import { TestSelectionComponent } from '@/components/testSelectionComponent'
+
 import s from './homePage.module.scss'
 
 export const HomePage = () => {

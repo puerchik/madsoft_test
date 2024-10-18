@@ -1,9 +1,11 @@
-import { resetTest } from '@/app/store/knowledgeChecksSlice'
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { resetTest } from '@/app/store/knowledgeChecksSlice'
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
+
+import { Button } from '@/components/button'
+
 import s from './result.module.scss'
-import { Button } from '../button'
 
 export const Result = () => {
   const { id } = useParams()

@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
+
 import { useAppSelector } from '@/shared/hooks/reduxHooks'
 
 import s from './testSelectionComponent.module.scss'
-import { Link } from 'react-router-dom'
 
 export const TestSelectionComponent = () => {
   const testsList = useAppSelector(state => state.persistedReducer)
