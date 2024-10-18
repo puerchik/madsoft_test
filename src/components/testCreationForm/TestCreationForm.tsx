@@ -84,9 +84,17 @@ export const TestCreationForm = () => {
         </div>
       )}
       {!!questions?.length && (
-        <Button type="button" onClickHandler={() => navigate(`/test/${testId}/1`)}>
-          Начать тест
-        </Button>
+        <div className={s.navigationButtonWrapper}>
+          <Button type="button" onClickHandler={() => navigate(`/test/${testId}/1`)}>
+            Начать тест
+          </Button>
+          <Button type="button" onClickHandler={() => navigate(`/`)}>
+            Главная
+          </Button>
+          <Button type="button" onClickHandler={() => navigate(`/selectTest`)}>
+            Список тестов
+          </Button>
+        </div>
       )}
     </>
   )

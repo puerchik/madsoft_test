@@ -16,7 +16,6 @@ export const Result = () => {
 
   const answers = useAppSelector(state => state.persistedReducer[testId].answers)
   const correct = answers.reduce((a, c) => (c.isCorrect ? a + 1 : a + 0), 0)
-  const incorrect = answers.length - correct
 
   const restartTestHandler = () => {
     dispatch(resetTest({ testId }))
@@ -27,11 +26,12 @@ export const Result = () => {
     navigate('/')
   }
 
-  console.log(answers, correct, incorrect)
   return (
     <div className={s.wrapper}>
       <h3 className={s.title}>Результаты теста:</h3>
-      <p className={s.result}>Тест пройден на {`${(correct / answers.length) * 100}`}%</p>
+      <p className={s.result}>
+        Тест пройден на {`${((correct / answers.length) * 100).toFixed(2)}`}%
+      </p>
       <p className={s.result}>
         Правильных ответов {`${correct}`} из {`${answers.length}`}
       </p>

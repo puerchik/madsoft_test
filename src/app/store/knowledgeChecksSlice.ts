@@ -21,15 +21,37 @@ const initialTest: Test = {
       timer: 900,
     },
     {
+      type: 'short',
+      question: 'Столица Португалии?',
+      correctAnswer: ['Лиссабон'],
+      options: [],
+      timer: 900,
+    },
+    {
+      type: 'single',
+      question: 'Какая самая длинная река в мире?',
+      correctAnswer: ['Нил'],
+      options: ['Янцзы', 'Енисей', 'Нил', 'Юкон'],
+      timer: 900,
+    },
+    {
+      type: 'short',
+      question: 'Как называется дом, сделанный полностью изо льда?',
+      correctAnswer: ['иглу'],
+      options: [],
+      timer: 900,
+    },
+    {
       type: 'multiply',
       question: 'Выберите четные числа.',
       correctAnswer: ['10', '88'],
       options: ['5', '10', '37', '88'],
       timer: 900,
     },
+
     {
       type: 'short',
-      question: 'Столица Беларуси.',
+      question: 'Столица Беларуси?',
       correctAnswer: ['Минск'],
       options: [],
       timer: 900,

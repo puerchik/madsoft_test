@@ -14,6 +14,7 @@
 .questionsCreationWrapper {
   display: flex;
   flex-direction: column;
+  margin-bottom: 25px;
 }
 
 .questionsListTitle {
@@ -40,4 +41,9 @@
   padding: 5px;
   border: 1px solid var(--color-black);
   border-radius: 3px;
+}
+
+.navigationButtonWrapper {
+  display: flex;
+  justify-content: space-between;
 }
