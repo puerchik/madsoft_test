@@ -10,3 +10,34 @@
   flex-direction: column;
   gap: 5px;
 }
+
+.questionsCreationWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.questionsListTitle {
+  font-size: var(--font-size-subheader);
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.questionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.question {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid var(--color-black);
+  border-radius: 3px;
+}
+
+.input {
+  all: unset;
+  padding: 5px;
+  border: 1px solid var(--color-black);
+  border-radius: 3px;
+}
