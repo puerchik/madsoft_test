@@ -8,6 +8,7 @@ import { addAnswer } from '@/app/store/knowledgeChecksSlice'
 import { areArraysEqual } from '@/shared/utils/arraysEquality'
 
 import s from './question.module.scss'
+import { Button } from '../button'
 
 export type QuestionType = '' | 'single' | 'multiply' | 'short' | 'detailed'
 
@@ -154,7 +155,9 @@ export const Question = () => {
                 )}
               </>
             )}
-            <button type="submit">Ответить</button>
+            <Button classNames={s.submitButton} type="submit">
+              Ответить
+            </Button>
           </form>
         </div>
       ) : (

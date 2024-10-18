@@ -14,3 +14,8 @@
 .result {
   font-size: var(--font-size-subheader);
 }
+
+.buttonWrapper {
+  display: flex;
+  gap: 15px;
+}

@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import s from './result.module.scss'
+import { Button } from '../button'
 
 export const Result = () => {
   const { id } = useParams()
@@ -32,8 +33,10 @@ export const Result = () => {
       <p className={s.result}>
         Правильных ответов {`${correct}`} из {`${answers.length}`}
       </p>
-      <button onClick={restartTestHandler}>Пройти тест заново</button>
-      <button onClick={selectTestHandler}>Выбрать другой тест</button>
+      <div className={s.buttonWrapper}>
+        <Button onClickHandler={restartTestHandler}>Пройти тест заново</Button>
+        <Button onClickHandler={selectTestHandler}>Выбрать другой тест</Button>
+      </div>
     </div>
   )
 }

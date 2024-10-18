@@ -1,0 +1,14 @@
+.button {
+  all: unset;
+  padding: 9px 45px;
+  border-radius: 3px;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  text-align: center;
+  transition: 0.2s;
+}
+
+.button:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
