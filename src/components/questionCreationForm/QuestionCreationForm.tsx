@@ -17,7 +17,6 @@ type Props = {
 export const QuestionCreationForm = ({ id }: Props) => {
   const [questionType, setQuestionType] = useState<QuestionType>('')
   const [options, setOptions] = useState<string[]>([])
-  const [optionsQuantity, setOptionsQuantity] = useState<number | undefined>(undefined)
 
   const { register, handleSubmit, reset } = useForm<Question>({
     defaultValues: {
@@ -32,14 +31,17 @@ export const QuestionCreationForm = ({ id }: Props) => {
 
   const changeQuestionTypeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setQuestionType(e.currentTarget.value as QuestionType)
-    setOptionsQuantity(0)
     setOptions([])
   }
 
   const changeOptionsQuantityHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const quantity = +e.currentTarget.value
-    if (quantity > 0 && quantity < 10) {
-      setOptionsQuantity(quantity)
+
+    if (quantity === 0) {
+      setOptions([])
+    }
+
+    if (quantity > 1 && quantity <= 10) {
       setOptions(Array(quantity).fill(''))
     }
   }
@@ -53,7 +55,6 @@ export const QuestionCreationForm = ({ id }: Props) => {
   const onSubmitHandler: SubmitHandler<Question> = data => {
     const question = { ...data, id }
     dispatch(addQuestion(question))
-    setOptionsQuantity(0)
     setOptions([])
     reset()
   }
@@ -91,15 +92,14 @@ export const QuestionCreationForm = ({ id }: Props) => {
         <div className={s.optionsWrapper}>
           <div className={s.inputWrapper}>
             <label className={s.label} htmlFor="optionsQuantity">
-              Введите количество вариантов ответа
+              Введите количество вариантов ответа, от 2 до 10:
             </label>
             <input
               className={s.input}
               required
               type="number"
               onChange={changeOptionsQuantityHandler}
-              placeholder="Введите количество вариантов ответа"
-              value={optionsQuantity}
+              placeholder="Количество ответов"
               id="optionsQuantity"
             />
           </div>
@@ -155,7 +155,25 @@ export const QuestionCreationForm = ({ id }: Props) => {
           Данный вопрос предполагает проверку человеком, поэтому вариантов ответа не предусмотрено.
         </p>
       )}
-      <Button type="submit">Создать вопрос</Button>
+      {questionType !== '' && (
+        <>
+          <div className={s.inputWrapper}>
+            <label className={s.label} htmlFor="questionTimer">
+              Введите время на выполнение данного вопроса в секундах, если время неограничено
+              введите 0, максимальное время 1 час (3600 секунд) :
+            </label>
+            <input
+              className={s.input}
+              required
+              type="number"
+              placeholder="Время выполнения"
+              id="questionTimer"
+              {...register('timer', { min: 0, max: 3600 })}
+            />
+          </div>
+          <Button type="submit">Создать вопрос</Button>
+        </>
+      )}
     </form>
   )
 }

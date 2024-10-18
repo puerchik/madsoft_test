@@ -58,7 +58,7 @@ export const knowledgeChecksSlice = createSlice({
         question: action.payload.question,
         correctAnswer: action.payload.correctAnswer,
         options: action.payload.options,
-        timer: 0,
+        timer: action.payload.timer,
       }
 
       state[action.payload.id].test.push(newQuestion)

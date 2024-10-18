@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 import { addTest } from '@/app/store/knowledgeChecksSlice'
@@ -20,6 +21,7 @@ export type Test = {
 }
 export const TestCreationForm = () => {
   const [testId, setTestId] = useState('')
+  const navigate = useNavigate()
   const questions = useAppSelector(state => state.persistedReducer[testId]?.test)
   const { handleSubmit, register, reset } = useForm<Test>({
     defaultValues: {
@@ -80,6 +82,11 @@ export const TestCreationForm = () => {
             </ul>
           </div>
         </div>
+      )}
+      {!!questions?.length && (
+        <Button type="button" onClickHandler={() => navigate(`/test/${testId}/1`)}>
+          Начать тест
+        </Button>
       )}
     </>
   )

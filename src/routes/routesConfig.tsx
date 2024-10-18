@@ -6,6 +6,7 @@ import { Result } from '@/components/result'
 import { HomePage } from '@/components/homePage'
 import { TestCreationForm } from '@/components/testCreationForm'
 import { TestSelectionComponent } from '@/components/testSelectionComponent'
+import { NotFoundPage } from '@/components/NotFoundPage'
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: '/selectTest',
         element: <TestSelectionComponent />,
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },
